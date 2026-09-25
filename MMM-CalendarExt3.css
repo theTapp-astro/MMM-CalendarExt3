@@ -624,43 +624,53 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
    Calendar Navigation
    ========================================================= */
 
-.CX3 .CX3-navigation {
+.CX3 .headerTitle {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 6px;
-  margin: 8px 0;
-  width: 100%;
+  justify-content: center;
+  gap: 10px;
+}
+
+.CX3 .CX3-header-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CX3 .CX3-navigation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .CX3 .CX3-navigation-button {
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgb(255 255 255 / 35%);
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(255 255 255 / 8%);
   color: white;
   font-family: inherit;
   font-size: 18px;
   line-height: 1;
-  min-width: 36px;
-  min-height: 30px;
-  padding: 4px 10px;
+  min-width: 32px;
+  min-height: 28px;
+  padding: 3px 8px;
   cursor: pointer;
 }
 
 .CX3 .CX3-navigation-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(255 255 255 / 20%);
 }
 
 .CX3 .CX3-navigation-button:active {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(255 255 255 / 30%);
 }
 
 .CX3 .CX3-navigation-button:focus {
-  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline: 1px solid rgb(255 255 255 / 60%);
   outline-offset: 2px;
 }
 
 .CX3 .CX3-navigation-today {
-  min-width: 60px;
-  font-size: 14px;
+  min-width: 52px;
+  font-size: 12px;
 }
