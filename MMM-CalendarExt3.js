@@ -894,10 +894,12 @@ Module.register("MMM-CalendarExt3", {
         previousButton.onclick = (event) => {
           event.stopPropagation()
 
-          this.sendNotification("CX3_SET_CONFIG", {
-            monthIndex: options.monthIndex - 1,
-            instanceId: options.instanceId
+          this.activeConfig = this.regularizeConfig({
+            ...this.activeConfig,
+            monthIndex: this.activeConfig.monthIndex - 1
           })
+
+          this.requestRender()
         }
 
         const todayButton = document.createElement("button")
@@ -930,10 +932,12 @@ Module.register("MMM-CalendarExt3", {
         nextButton.onclick = (event) => {
           event.stopPropagation()
 
-          this.sendNotification("CX3_SET_CONFIG", {
-            monthIndex: options.monthIndex + 1,
-            instanceId: options.instanceId
+          this.activeConfig = this.regularizeConfig({
+            ...this.activeConfig,
+            monthIndex: this.activeConfig.monthIndex + 1
           })
+
+          this.requestRender()
         }
 
         const nextTwoButton = document.createElement("button")
@@ -946,10 +950,12 @@ Module.register("MMM-CalendarExt3", {
         nextTwoButton.onclick = (event) => {
           event.stopPropagation()
 
-          this.sendNotification("CX3_SET_CONFIG", {
-            monthIndex: options.monthIndex + 2,
-            instanceId: options.instanceId
+          this.activeConfig = this.regularizeConfig({
+            ...this.activeConfig,
+            monthIndex: this.activeConfig.monthIndex + 2
           })
+
+          this.requestRender()
         }
 
         navigation.append(previousButton)
