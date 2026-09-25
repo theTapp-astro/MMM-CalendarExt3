@@ -619,3 +619,48 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
 #CX3_POPOVER .criteriaItem.calendar .name::before {
   content: "CALENDAR";
 }
+
+/* =========================================================
+   Calendar Navigation
+   ========================================================= */
+
+.CX3 .CX3-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.CX3 .CX3-navigation-button {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 1;
+  min-width: 36px;
+  min-height: 30px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.CX3 .CX3-navigation-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.CX3 .CX3-navigation-button:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.CX3 .CX3-navigation-button:focus {
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.CX3 .CX3-navigation-today {
+  min-width: 60px;
+  font-size: 14px;
+}
