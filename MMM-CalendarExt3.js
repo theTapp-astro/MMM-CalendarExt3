@@ -837,98 +837,28 @@ Module.register("MMM-CalendarExt3", {
       } while (wm.valueOf() <= eoc.valueOf())
     }
 
-        const makeNavigationDom = (dom, options) => {
-      if (!options.showNavigation || options.mode !== "month") return
-
-      const navigation = document.createElement("div")
-      navigation.classList.add("CX3-navigation")
-
-      const previousButton = document.createElement("button")
-      previousButton.classList.add("CX3-navigation-button")
-      previousButton.type = "button"
-      previousButton.innerHTML = "‹"
-      previousButton.title = "Previous month"
-      previousButton.setAttribute("aria-label", "Previous month")
-
-      previousButton.onclick = () => {
-        this.sendNotification("CX3_SET_CONFIG", {
-          instanceId: options.instanceId,
-          monthIndex: options.monthIndex - 1
-        })
-      }
-
-      const todayButton = document.createElement("button")
-      todayButton.classList.add("CX3-navigation-button", "CX3-navigation-today")
-      todayButton.type = "button"
-      todayButton.innerHTML = "Today"
-      todayButton.title = "Return to current month"
-      todayButton.setAttribute("aria-label", "Return to current month")
-
-      todayButton.onclick = () => {
-        this.sendNotification("CX3_SET_CONFIG", {
-          instanceId: options.instanceId,
-          monthIndex: 0,
-          referenceDate: null
-        })
-      }
-
-      const nextButton = document.createElement("button")
-      nextButton.classList.add("CX3-navigation-button")
-      nextButton.type = "button"
-      nextButton.innerHTML = "›"
-      nextButton.title = "Next month"
-      nextButton.setAttribute("aria-label", "Next month")
-
-      nextButton.onclick = () => {
-        this.sendNotification("CX3_SET_CONFIG", {
-          instanceId: options.instanceId,
-          monthIndex: options.monthIndex + 1
-        })
-      }
-
-      const nextTwoButton = document.createElement("button")
-      nextTwoButton.classList.add("CX3-navigation-button")
-      nextTwoButton.type = "button"
-      nextTwoButton.innerHTML = "››"
-      nextTwoButton.title = "Two months forward"
-      nextTwoButton.setAttribute("aria-label", "Two months forward")
-
-      nextTwoButton.onclick = () => {
-        this.sendNotification("CX3_SET_CONFIG", {
-          instanceId: options.instanceId,
-          monthIndex: options.monthIndex + 2
-        })
-      }
-
-      navigation.append(previousButton)
-      navigation.append(todayButton)
-      navigation.append(nextButton)
-      navigation.append(nextTwoButton)
-
-      dom.append(navigation)
-    }
-    
-    const customHeaderDom = (dom, options, { boc, eoc }) => {
+        const customHeaderDom = (dom, options, { boc, eoc }) => {
       const defaultCustomHeader = (options, boc, eoc) => {
         try {
           const locale = options.locale
           const titleOptions = options.headerTitleOptions
+
           if (options.mode === "month") {
             const focusDate = this.getMoment(options)
+
             return new Intl.DateTimeFormat(locale, titleOptions)
               .formatToParts(new Date(focusDate.valueOf()))
               .reduce((prev, cur, curIndex) => {
-                const result = `${prev}<span class="headerTimeParts ${cur.type} seq_${curIndex} ${cur.source}">${cur.value}</span>`
-                return result
+                return `${prev}<span class="headerTimeParts ${cur.type} seq_${curIndex} ${cur.source}">${cur.value}</span>`
               }, "")
           } else {
             const begin = new Date(boc.valueOf())
             const end = new Date(eoc.valueOf())
+
             return new Intl.DateTimeFormat(locale, titleOptions)
               .formatRangeToParts(begin, end)
               .reduce((prev, cur, curIndex) => {
-                const result = `${prev}<span class="headerTimeParts ${cur.type} seq_${curIndex} ${cur.source}">${cur.value}</span>`
-                return result
+                return `${prev}<span class="headerTimeParts ${cur.type} seq_${curIndex} ${cur.source}">${cur.value}</span>`
               }, "")
           }
         } catch (e) {
@@ -936,9 +866,100 @@ Module.register("MMM-CalendarExt3", {
           return ""
         }
       }
+
       const header = document.createElement("h1")
       header.classList.add("headerTitle")
-      header.innerHTML = (typeof options.customHeader === "function") ? options.customHeader(options, boc, eoc) : defaultCustomHeader(options, boc, eoc)
+
+      const title = document.createElement("span")
+      title.classList.add("CX3-header-title")
+
+      title.innerHTML =
+        (typeof options.customHeader === "function")
+          ? options.customHeader(options, boc, eoc)
+          : defaultCustomHeader(options, boc, eoc)
+
+      header.append(title)
+
+      if (options.showNavigation && options.mode === "month") {
+        const navigation = document.createElement("span")
+        navigation.classList.add("CX3-navigation")
+
+        const previousButton = document.createElement("button")
+        previousButton.classList.add("CX3-navigation-button")
+        previousButton.type = "button"
+        previousButton.innerHTML = "‹"
+        previousButton.title = "Previous month"
+        previousButton.setAttribute("aria-label", "Previous month")
+
+        previousButton.onclick = (event) => {
+          event.stopPropagation()
+
+          this.sendNotification("CX3_SET_CONFIG", {
+            monthIndex: options.monthIndex - 1,
+            instanceId: options.instanceId
+          })
+        }
+
+        const todayButton = document.createElement("button")
+        todayButton.classList.add(
+          "CX3-navigation-button",
+          "CX3-navigation-today"
+        )
+        todayButton.type = "button"
+        todayButton.innerHTML = "Today"
+        todayButton.title = "Return to current month"
+        todayButton.setAttribute("aria-label", "Return to current month")
+
+        todayButton.onclick = (event) => {
+          event.stopPropagation()
+
+          this.sendNotification("CX3_SET_CONFIG", {
+            monthIndex: 0,
+            referenceDate: null,
+            instanceId: options.instanceId
+          })
+        }
+
+        const nextButton = document.createElement("button")
+        nextButton.classList.add("CX3-navigation-button")
+        nextButton.type = "button"
+        nextButton.innerHTML = "›"
+        nextButton.title = "Next month"
+        nextButton.setAttribute("aria-label", "Next month")
+
+        nextButton.onclick = (event) => {
+          event.stopPropagation()
+
+          this.sendNotification("CX3_SET_CONFIG", {
+            monthIndex: options.monthIndex + 1,
+            instanceId: options.instanceId
+          })
+        }
+
+        const nextTwoButton = document.createElement("button")
+        nextTwoButton.classList.add("CX3-navigation-button")
+        nextTwoButton.type = "button"
+        nextTwoButton.innerHTML = "››"
+        nextTwoButton.title = "Two months forward"
+        nextTwoButton.setAttribute("aria-label", "Two months forward")
+
+        nextTwoButton.onclick = (event) => {
+          event.stopPropagation()
+
+          this.sendNotification("CX3_SET_CONFIG", {
+            monthIndex: options.monthIndex + 2,
+            instanceId: options.instanceId
+          })
+        }
+
+        navigation.append(previousButton)
+        navigation.append(todayButton)
+        navigation.append(nextButton)
+        navigation.append(nextTwoButton)
+
+        header.append(navigation)
+      }
+
       dom.prepend(header)
     }
 
@@ -958,7 +979,6 @@ Module.register("MMM-CalendarExt3", {
     makeWeekGridDom(dom, options, targetEvents, { boc, eoc })
     if (options.displayLegend) displayLegend(dom, targetEvents, options)
     if (options.customHeader) customHeaderDom(dom, options, { boc, eoc })
-    if (options.showNavigation) makeNavigationDom(dom, options)
     return dom
   },
 
