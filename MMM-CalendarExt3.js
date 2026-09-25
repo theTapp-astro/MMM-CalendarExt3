@@ -84,6 +84,10 @@ Module.register("MMM-CalendarExt3", {
     skipDuplicated: true,
     monthIndex: 0,
     referenceDate: null,
+
+    //Calendar Navigation Buttons
+    showNavigation: false,
+    
     showHeader: true,
     customHeader: false // true or function
   },
@@ -833,6 +837,77 @@ Module.register("MMM-CalendarExt3", {
       } while (wm.valueOf() <= eoc.valueOf())
     }
 
+        const makeNavigationDom = (dom, options) => {
+      if (!options.showNavigation || options.mode !== "month") return
+
+      const navigation = document.createElement("div")
+      navigation.classList.add("CX3-navigation")
+
+      const previousButton = document.createElement("button")
+      previousButton.classList.add("CX3-navigation-button")
+      previousButton.type = "button"
+      previousButton.innerHTML = "‹"
+      previousButton.title = "Previous month"
+      previousButton.setAttribute("aria-label", "Previous month")
+
+      previousButton.onclick = () => {
+        this.sendNotification("CX3_SET_CONFIG", {
+          instanceId: options.instanceId,
+          monthIndex: options.monthIndex - 1
+        })
+      }
+
+      const todayButton = document.createElement("button")
+      todayButton.classList.add("CX3-navigation-button", "CX3-navigation-today")
+      todayButton.type = "button"
+      todayButton.innerHTML = "Today"
+      todayButton.title = "Return to current month"
+      todayButton.setAttribute("aria-label", "Return to current month")
+
+      todayButton.onclick = () => {
+        this.sendNotification("CX3_SET_CONFIG", {
+          instanceId: options.instanceId,
+          monthIndex: 0,
+          referenceDate: null
+        })
+      }
+
+      const nextButton = document.createElement("button")
+      nextButton.classList.add("CX3-navigation-button")
+      nextButton.type = "button"
+      nextButton.innerHTML = "›"
+      nextButton.title = "Next month"
+      nextButton.setAttribute("aria-label", "Next month")
+
+      nextButton.onclick = () => {
+        this.sendNotification("CX3_SET_CONFIG", {
+          instanceId: options.instanceId,
+          monthIndex: options.monthIndex + 1
+        })
+      }
+
+      const nextTwoButton = document.createElement("button")
+      nextTwoButton.classList.add("CX3-navigation-button")
+      nextTwoButton.type = "button"
+      nextTwoButton.innerHTML = "››"
+      nextTwoButton.title = "Two months forward"
+      nextTwoButton.setAttribute("aria-label", "Two months forward")
+
+      nextTwoButton.onclick = () => {
+        this.sendNotification("CX3_SET_CONFIG", {
+          instanceId: options.instanceId,
+          monthIndex: options.monthIndex + 2
+        })
+      }
+
+      navigation.append(previousButton)
+      navigation.append(todayButton)
+      navigation.append(nextButton)
+      navigation.append(nextTwoButton)
+
+      dom.append(navigation)
+    }
+    
     const customHeaderDom = (dom, options, { boc, eoc }) => {
       const defaultCustomHeader = (options, boc, eoc) => {
         try {
@@ -883,6 +958,7 @@ Module.register("MMM-CalendarExt3", {
     makeWeekGridDom(dom, options, targetEvents, { boc, eoc })
     if (options.displayLegend) displayLegend(dom, targetEvents, options)
     if (options.customHeader) customHeaderDom(dom, options, { boc, eoc })
+    if (options.showNavigation) makeNavigationDom(dom, options)
     return dom
   },
 
