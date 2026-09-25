@@ -19,6 +19,12 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
   font-size: var(--fontsize);
   color: var(--defaultcolor);
   line-height: calc(var(--eventheight));
+  /* LT ADDED BELOW */
+  min-width: 1060px;
+  max-width: 1070px;
+  margin: 0 auto;
+  /*THIS IS ADDED TO MAKE ROOM FOR DONUT AND MONGO AT THE BOTTOM*/
+  margin-bottom: 170px;
 }
 
 .CX3 * {
@@ -396,16 +402,16 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
 }
 
 .CX3 .weekend {
-  color: crimson;
+  //color: crimson;
   font-weight: bold;
 }
 
 .CX3 .weekend_2 {
-  color: crimson;
+  //color: crimson;
 }
 
 .CX3 .weekend_1 {
-  color: dodgerblue;
+  //color: dodgerblue;
 }
 
 .CX3 .cellHeader .cellDate {
@@ -415,19 +421,19 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
 .CX3 .cellHeader .cellWeather {
   color: white;
   margin: 2px;
-  font-size: 100%;
+  font-size: 75% //100%;
   align-self: center;
 }
 
 .CX3 .cellHeader .cellWeather .icon {
-  font-size: 100%;
+  font-size: 75% //100%;
   font-weight: bold;
 }
 
 .CX3 .cellHeader .cellWeather .maxTemp {
   color: white;
   font-weight: bold;
-  font-size: 90%;
+  font-size: 75% //90%;
 }
 
 .CX3 .cellHeader .cellWeather .minTemp {
@@ -438,7 +444,7 @@ selector-pseudo-class-no-unknown, keyframes-name-pattern,
 .CX3 .cellHeader .cellWeather .temperature {
   display: var(--displayWeatherTemp);
   padding-left: 5px;
-  font-size: 90%;
+  font-size: 75% //90%;
 }
 
 .CX3 .cellHeader .cellWeather .maxTemp::before {
